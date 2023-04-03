@@ -178,3 +178,20 @@ function reOrder() {
     localStorage.setItem('items', JSON.stringify(list));
   }
 }
+
+if (localStorage.getItem('items') === null) {
+  localStorage.setItem('items', '');
+}
+
+document.getElementById('formCreate').addEventListener('submit', (e) => {
+  e.preventDefault();
+  addItem();
+});
+
+document.getElementById('formUpdate').addEventListener('submit', (e) => {
+  e.preventDefault();
+  updateItem();
+});
+
+removeCompleted();
+loadItems();
