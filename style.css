@@ -91,3 +91,8 @@ h3:hover {
 .description {
   margin-left: -40%;
 }
+
+.checkedParagraph {
+  color: #999;
+  text-decoration: line-through;
+}

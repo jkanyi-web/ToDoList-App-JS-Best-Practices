@@ -1,6 +1,6 @@
 /** @format */
 
-function addItem() {
+const addItem = () => {
   const userInputValue = document.getElementById('input').value;
 
   const item = {
@@ -32,9 +32,9 @@ function addItem() {
   loadItems();
 
   document.getElementById('input').value = '';
-}
+};
 
-function updateItem() {
+const updateItem = () => {
   const items = JSON.parse(localStorage.getItem('items'));
 
   const updatedValue = document.getElementById('updateId').value;
@@ -50,41 +50,30 @@ function updateItem() {
 
   document.getElementById('formCreate').style.display = 'block';
   document.getElementById('formUpdate').style.display = 'none';
-}
+};
 
-function checkStatus() {
+const checkStatus = () => {
   const items = JSON.parse(localStorage.getItem('items'));
   const checkBoxes = document.querySelectorAll('.check');
 
   checkBoxes.forEach((box, index) => {
     const paragraph = box.nextElementSibling;
 
-    box.checked = items[index].completed;
-    if (items[index].completed) {
-      paragraph.style.textDecoration = 'line-through';
-      paragraph.style.color = '#999';
-    } else {
-      paragraph.style.textDecoration = 'none';
-      paragraph.style.color = 'black';
-    }
-
     box.addEventListener('click', () => {
       items[index].completed = box.checked;
       if (items[index].completed) {
-        paragraph.style.textDecoration = 'line-through';
-        paragraph.style.color = '#999';
+        paragraph.classList.add('checkedParagraph');
       } else {
-        paragraph.style.textDecoration = 'none';
-        paragraph.style.color = 'black';
+        paragraph.classList.remove('checkedParagraph');
       }
       localStorage.setItem('items', JSON.stringify(items));
     });
   });
-}
+};
 
-function checkNull(item) {
+const checkNull = (item) => {
   return item.description !== null;
-}
+};
 
 function deleteItem() {
   const items = JSON.parse(localStorage.getItem('items'));
@@ -101,7 +90,7 @@ function deleteItem() {
   });
 }
 
-function editItem() {
+const editItem = () => {
   const editItems = document.querySelectorAll('.fa-edit');
 
   editItems.forEach((item, index) => {
@@ -115,22 +104,14 @@ function editItem() {
       document.getElementById('updateId').value = previousSibling.textContent;
     });
   });
-}
+};
 
-
-function loadItems() {
+const loadItems = () => {
   const listContainer = document.querySelector('.list');
 
   listContainer.innerHTML = '';
 
-  const tasks = [];
-
-  if (localStorage.getItem('items').length > 0) {
-    const items = JSON.parse(localStorage.getItem('items'));
-    items.forEach((item) => {
-      tasks.push(item);
-    });
-  }
+  const tasks = JSON.parse(localStorage.getItem('items')) || [];
 
   tasks.sort((a, b) => a.index - b.index);
 
@@ -148,9 +129,9 @@ function loadItems() {
   checkStatus();
   deleteItem();
   editItem();
-}
+};
 
-function removeCompleted() {
+const removeCompleted = () => {
   const clear = document.querySelector('.clear');
 
   clear.addEventListener('click', () => {
@@ -162,9 +143,9 @@ function removeCompleted() {
 
     loadItems();
   });
-}
+};
 
-function reOrder() {
+const reOrder = () => {
   if (localStorage.getItem('items').length > 0) {
     const list = [];
 
@@ -177,7 +158,7 @@ function reOrder() {
 
     localStorage.setItem('items', JSON.stringify(list));
   }
-}
+};
 
 if (localStorage.getItem('items') === null) {
   localStorage.setItem('items', '');
